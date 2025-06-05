@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Quiz & API Page</title>
+  <style>
+    /* Base styles */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #20bd5f;
+      margin: 0;
+    }
+
+    h1, h2 {
+      color: #333;
+    }
+
+    section {
+      margin-bottom: 40px;
+      padding: 20px;
+      background: rgb(223, 224, 228);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #result, #joke {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    /* Tablet */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      section {
+        padding: 15px;
+      }
+
+      button {
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>My Responsive Web Page</h1>
+
+  <!-- Quiz Section -->
+  <section>
+    <h2>Interactive Quiz</h2>
+    <p>What is the capital of France?</p>
+    <button onclick="checkAnswer('Berlin')">Berlin</button>
+    <button onclick="checkAnswer('Paris')">Paris</button>
+    <button onclick="checkAnswer('Madrid')">Madrid</button>
+    <p id="result"></p>
+  </section>
+
+  <!-- API Joke Section -->
+  <section>
+    <h2>Get a Random Joke</h2>
+    <button onclick="getJoke()">Tell Me a Joke</button>
+    <p id="joke"></p>
+  </section>
+
+  <script>
+    // Quiz logic
+    function checkAnswer(answer) {
+      const result = document.getElementById('result');
+      if (answer === 'Paris') {
+        result.textContent = '✅ Correct!';
+        result.style.color = 'green';
+      } else {
+        result.textContent = '❌ Wrong. Try again!';
+        result.style.color = 'red';
+      }
+    }
+
+    // Joke API fetch
+    async function getJoke() {
+      const jokeElement = document.getElementById('joke');
+      jokeElement.textContent = 'Loading...';
+      try {
+        const response = await fetch('https://icanhazdadjoke.com/', {
+          headers: { 'Accept': 'application/json' }
+        });
+        const data = await response.json();
+        jokeElement.textContent = `😂 ${data.joke}`;
+      } catch (error) {
+        jokeElement.textContent = 'Failed to fetch a joke. Please try again.';
+      }
+    }
+  </script>
+
+</body>
+</html>
