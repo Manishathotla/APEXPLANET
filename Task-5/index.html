@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GlowCart</title>
+  <style>
+    :root {
+      --bg: #0f0c29;
+      --bg-light: #302b63;
+      --accent: #ff6ec4;
+      --text: #f8f8f8;
+      --card-bg: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, var(--bg), var(--bg-light));
+      color: var(--text);
+    }
+
+    header {
+      padding: 1.5rem;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      background: linear-gradient(45deg, #ff6ec4, #7873f5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 1rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 15px;
+      height: 150px;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      margin: 0.5rem 0;
+    }
+
+    .card p {
+      color: #ccc;
+      margin: 0.2rem 0 1rem;
+    }
+
+    .card button {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 30px;
+      background: var(--accent);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .card button:hover {
+      background: #ff92dd;
+    }
+
+    #cart {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      background: rgba(255,255,255,0.05);
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      #cart { font-size: 0.9rem; padding: 0.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>✨ GlowCart – Stylish Mini Store ✨</h1>
+</header>
+
+<div id="cart">🛒 Cart: <span id="cartCount">0</span></div>
+
+<main class="container" id="productList"></main>
+
+<footer>
+  &copy; 2025 GlowCart | Made with 💜 by You
+</footer>
+
+<script>
+  const products = [
+    { id: 1, name: "Glow Phone", price: 499, img: "https://via.placeholder.com/240x150?text=Glow+Phone" },
+    { id: 2, name: "Magic Shoes", price: 149, img: "https://via.placeholder.com/240x150?text=Magic+Shoes" },
+    { id: 3, name: "Starlight Laptop", price: 999, img: "https://via.placeholder.com/240x150?text=Starlight+Laptop" },
+    { id: 4, name: "Dream Backpack", price: 79, img: "https://via.placeholder.com/240x150?text=Dream+Bag" }
+  ];
+
+  let cart = [];
+
+  function renderProducts() {
+    const list = document.getElementById('productList');
+    list.innerHTML = "";
+    products.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${p.img}" loading="lazy" alt="${p.name}">
+        <h3>${p.name}</h3>
+        <p>₹${p.price}</p>
+        <button onclick="addToCart(${p.id})">Add to Cart</button>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  function addToCart(id) {
+    cart.push(id);
+    document.getElementById("cartCount").textContent = cart.length;
+  }
+
+  renderProducts();
+</script>
+
+</body>
+</html>
